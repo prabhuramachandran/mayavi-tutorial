@@ -1,0 +1,160 @@
+cells:
+
+- markdown: |
+    # Introduction to Mayavi
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+    <br/>
+
+    **SciPy 2018**
+    **Austin, Texas, July 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - What is Mayavi?
+    - What can it do for you?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    <center>
+    <img width="90%" src="MEDIA/m2/m2_app3_3.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    <center>
+    <img width="90%" src="MEDIA/m2/ipython_mayavi.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    <center>
+    <img width="90%" src="MEDIA/m2/lorenz_ui1.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    <center>
+    <img width="90%" src="MEDIA/m2/m2_envisage.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    <center>
+    <img width="90%" src="MEDIA/m2/mayavi_jupyter.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Information
+
+    - Old package: around for > 15 years
+    - Seamless NumPy integration
+    - Fully scriptable
+    - Can be used with a GUI
+    - https://github.com/enthought/mayavi
+    - Uses VTK (http://www.vtk.org)
+    - Provides a GUI for VTK
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Visualization features
+
+    - Supports a variety of datasets
+    - Polygonal data, structured grids, unstructured grids
+    - Many visualization algorithms
+    - Scalar, vector, and tensor visualization
+    - Volume rendering
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Other features
+
+    * Automatic script recording
+    * wxPython and Qt/PySide support
+    * Powerful command line options
+    * Off-screen support
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    <div align="center">
+    <video loop controls width="90%" height="90%" src="./mayavi_recording_demo.webm" />
+    </div>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Overview of architecture
+    <center>
+    <img width="80%" height="80%" src="MEDIA/m2/layers.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## What next?
+
+    - Get started with `mlab`
+    - Simple animation
+    - Understanding the mayavi pipeline
+    - Making your own datasets
+    - Learning the filters and modules by example
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  language: python
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2

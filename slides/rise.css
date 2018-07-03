@@ -1,0 +1,16 @@
+/* Customizations for RISE slides
+ */
+
+/* Increase font size for the code cells.
+*/
+
+div.cell.code_cell {
+    font-size: 150%;
+}
+
+/* Tables were rendered out as tiny values
+ since the font-size was set to 12px somehow.
+*/
+.rendered_html table {
+    font-size: 100%
+}
