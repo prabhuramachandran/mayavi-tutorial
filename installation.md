@@ -5,6 +5,9 @@ Mayavi namely, 4.6.0. Mayavi will also work with Python 2.7 if you are
 constrained to use that version. However, the following instructions are
 written for 3.5 or 3.6.
 
+Once you are done reading this and installing Mayavi, go back to the
+[main instructions](./README.md).
+
 ## Requirements
 
 [Mayavi](https://github.com/enthought/mayavi) requires numpy and
@@ -85,6 +88,8 @@ In []: mlab.test_plot3d()
 This should produce a window that is interactive and usable without any
 tracebacks or exceptions.
 
+## Possible issues
+
 If you get strange warnings like this:
 ```
 QWidgetWindow(0x7fce6d8eac30, name="_ToolBarClassWindow") ( QScreen(0x7fce6be35730, name="Color LCD") ): Attempt to set a screen on a child window.
@@ -93,4 +98,11 @@ when creating Mayavi plots, install pyqt5 via pip like so:
 
 ```
 $ pip install pyqt5
+```
+
+Note that pyqt5 version 5.11.2 on PyPI is broken, and you should install the
+previous version or perhaps a later version.  This can be done like so:
+
+```
+$ pip install pyqt5==5.10.1
 ```
