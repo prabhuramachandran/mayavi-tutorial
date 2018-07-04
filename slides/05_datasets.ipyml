@@ -1,0 +1,810 @@
+cells:
+
+- markdown: |
+    # VTK/Mayavi: Datasets Primer
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+
+    <br/>
+
+    **SciPy 2018**
+
+    **Austin, Texas, July 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - Introduction
+    - VTK datasets in brief
+    - Creating datasets from Python
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - **Introduction**  $\Longleftarrow$
+    - VTK datasets
+    - Creating datasets from Python
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Datasets: Why the fuss?
+
+    * 3D data requires more information than in 2D
+
+    * Topology is important
+
+    * 2D is a lot easier
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Topology
+    ### Topology: mathematics
+
+    > A branch of mathematics which studies the properties of geometrical
+    > forms which retain their identity under certain transformations, such as
+    > stretching or twisting, which are homeomorphic.
+
+    -- from the Collaborative International Dictionary of English
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Topology
+    ### Topology: networking
+
+    > Which hosts are directly connected to which other hosts in a network.
+    > Network layer processes need to consider the current network topology to
+    > be able to route packets to their final destination reliably and
+    > efficiently.
+
+    -- from the free On-line Dictionary of Computing
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Topology and Grids
+
+    * Layman definition: how are points of the space connected up to
+      form a line/surface/volume
+
+    * *Grid* in scientific computing: points + topology
+
+    * Space broken into small "pieces" called
+        * Cells
+        * Elements
+
+    * Data can be associated with the points or cells
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## The general idea
+
+    * Specify points of the space
+
+    * Specify connectivity between points (topology)
+
+    * Connectivity creates "cells"
+
+    * Specify "attribute" data at points or cells
+
+    <img src="MEDIA/m2/datasets/dataset_idea.png" width="60%" height="25%" />
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Types of datasets
+
+    * Implicit topology (structured):
+       * Image data (structured points)
+       * Rectilinear grids
+       * Structured grids
+
+    * Explicit topology (unstructured):
+       * Polygonal data (surfaces)
+       * Unstructured grids
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Structured versus unstructured grids
+
+    * Important to understand the differences
+
+    * Differences related to topology specification
+
+    * Recall the `mlab` data sources?
+       * Unconnected
+       * Implicit connectivity
+       * Explicit connectivity
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Unconnected sources
+
+    | `scalar_scatter` | `vector_scatter` |
+    | ---------------- | ---------------- |
+    | <img src="MEDIA/m2/mlab/points3d_ex.png"/> | <img src="MEDIA/m2/mlab/quiver3d_ex.png"/> |
+    |`PolyData`      | `PolyData`    |
+    |`mlab.points3d`   | `mlab.quiver3d` |
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Implicitly-connected sources
+
+    | `scalar_field`    |   `vector_field`  |
+    | ----------------- | ---------------   |
+    | <img src="MEDIA/m2/mlab/contour3d.png" height="75%" width="100%"/> | <img src="MEDIA/m2/mlab/flow_ex.png" width="75%" height="60%" /> |
+    | `ImageData`       | `ImageData`     |
+    | `mlab.contour3d`  | `mlab.flow`     |
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Implicitly-connected sources
+
+    `array2d_source`
+
+    <img src="MEDIA/m2/mlab/imshow_ex.png" width="50%" height="50%"/>
+
+    `ImageData`
+
+    `mlab.imshow`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Explicitly-connected sources
+
+    | `line_source`  | `triangular_mesh_source` |
+    | -------------- | ---------------------- |
+    | <img src="MEDIA/m2/mlab/plot3d_ex.png"/> |  <img src="MEDIA/m2/mlab/triangular_mesh_ex.png"/> |
+    |`PolyData`      | `PolyData`    |
+    |`mlab.plot3d`   | `mlab.triangular_mesh` |
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Structured grids
+
+    * Implicit topology associated with points
+    * Easiest example: a rectangular mesh
+    * Non-rectangular mesh certainly possible
+
+
+    |<img src="MEDIA/m2/datasets/rectangularsg.png"/> | <img src="MEDIA/m2/datasets/sgrid.png"/>|
+    | ------ | ------- |
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Unstructured grids
+
+    * Explicit topology specification
+
+    * Specified via connectivity lists
+
+    * Different number of neighbors, different types of cells
+
+    <img src="MEDIA/m2/datasets/unstructured.png" width="60%" height="25%"/>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Different types of cells
+
+    <img src="MEDIA/m2/datasets/cells.png"/>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Scalar, vector and tensor fields
+
+    * Associate a scalar/vector/tensor with every point of the space
+
+    * Scalar field: $ f(\mathcal{R}^n) \rightarrow \mathcal{R}$
+    * Vector field: $ f(\mathcal{R}^n) \rightarrow \mathcal{R}^m$
+    * Some examples:
+        * Temperature distribution on a rod
+        * Pressure distribution in room
+        * Velocity field in room
+        * Vorticity field in room
+        * Stress tensor field on a surface
+
+    * Two aspects of field data, representation and visualization
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## A note on Cell Data
+
+    * Most algorithms work with point data
+
+    * Convert to point data: `CellDataToPointData`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise
+    <center>
+    <img src="MEDIA/m2/mlab/points3d_ex.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise
+    <center>
+    <img src="MEDIA/m2/mlab/plot3d_ex.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise
+    <center>
+    <img src="MEDIA/m2/mlab/surf_ex.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise
+    <center>
+    <img src="MEDIA/m2/mlab/contour3d.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise
+    <center>
+    <img src="MEDIA/m2/mlab/triangular_mesh.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - Introduction
+    - **VTK datasets** $\Longleftarrow$
+    - Creating datasets from Python
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Legacy VTK Data files
+
+    * Detailed documentation on this is available here:
+        [www.vtk.org/VTK/img/file-formats.pdf](https://www.vtk.org/VTK/img/file-formats.pdf)
+
+    * VTK data files support the following:
+      1. Structured points (Image data)
+      1. Rectilinear grid
+      1. Structured grid
+      1. Unstructured grid
+      1. Polygonal data
+
+    * Binary and ASCII files are supported
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## The different datasets
+
+    - Implicitly connected datasets
+
+       - Structured points/Image data: fixed spacing, orthogonal
+       - Rectilinear grid: spacing variable but orthogonal coordinates
+       - Structured grids: mappable to a meshgrid
+
+    - Explicitly connected
+
+       - Polygonal data: surfaces
+       - Unstructured grid: volumes/surfaces
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Implicit ordering
+
+    * Important: Implicit ordering of points and cells.
+      The $X$ co-ordinate increases first, $Y$ next and $Z$ last.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## General structure
+
+    ```
+    # vtk DataFile Version 2.0
+    A long string describing the file (256 chars)
+    ASCII | BINARY
+    DATASET [type]
+    ...
+
+    POINT_DATA n
+    ...
+
+    CELL_DATA n
+    ...
+    ```
+
+    * Point and cell data can be supplied together.
+    * `n` is the number of points or cells.
+
+
+- markdown: |
+    ## Simple example
+
+    ```
+    # vtk DataFile Version 2.0
+    Structured points example.
+    ASCII
+    DATASET STRUCTURED_POINTS
+    DIMENSIONS 2 2 1
+    ORIGIN 0.0 0.0 0.0
+    SPACING 1.0 1.0 1.0
+
+    POINT_DATA 4
+    SCALARS Temperature float
+    LOOKUP_TABLE default
+    100 200
+    300 400
+
+    VECTORS velocity float
+    0.0 0.0 0.0
+    1.0 0.0 0.0
+    0.0 1.0 0.0
+    1.0 1.0 0.0
+    ```
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Notes
+
+    * This is a legacy format
+    * New format is in XML
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Loading data with `mlab`
+
+    This will open all supported files:
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %gui qt
+    import numpy as np
+    from mayavi import mlab
+
+- code: |
+    mlab.pipeline.open('data/room_vis.wrl')
+    mlab.pipeline.open('data/fire_ug.vtu')
+
+- markdown: |
+    ## Outline
+
+    - Introduction
+    - VTK datasets
+    - **Creating datasets from Python** $\Longleftarrow$
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Overview
+
+    * Create datasets with TVTK and NumPy
+
+    * Simple examples
+
+    * Very handy when working with NumPy
+
+    * No need to create VTK data files!
+
+    * `PolyData, StructuredPoints,` `StructuredGrid` , `UnstructuredGrid`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Overview
+
+    * Using `tvtk`  in the following
+
+    * `tvtk`  uses VTK underneath
+
+    * Much easier to use than raw VTK
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from tvtk.api import tvtk
+
+- markdown: |
+    ## Structured Points: 2D
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from scipy import special
+    # The scalar values.
+    x = (np.arange(50.0) - 25)/2.0
+    y = x.copy()
+    r = np.sqrt(x[:,None]**2+y**2)
+    z = 5.0*special.j0(r)  # Bessel function of order 0
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    # Can't specify explicit points, they are implicit.
+    # The volume specified using origin, spacing and dims.
+    from tvtk.api import tvtk
+    spoints = tvtk.StructuredPoints(origin=(-12.5,-12.5,0),
+                                    spacing=(0.5,0.5,1),
+                                    dimensions=(50,50,1))
+
+- code: |
+    # Transpose array data due to VTK's implicit ordering.
+    # ravel it so the number of components is 1.
+    spoints.point_data.scalars = z.T.ravel()
+    spoints.point_data.scalars.name = 'scalar'
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Visualizing it
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    # Add the dataset to the pipeline
+    src = mlab.pipeline.add_dataset(spoints)
+
+    warp = mlab.pipeline.warp_scalar(src)
+    surf = mlab.pipeline.surface(warp)
+
+- markdown: |
+    <center>
+    <img src="MEDIA/m2/datasets/structured_points2d.png" width="50%" height="40%"/>
+    </center>
+
+- markdown: |
+    ## Structured Points: 3D
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x, y, z = np.ogrid[-5:5:128j,-5:5:128j,
+                       -5:5:128j]
+    x, y, z = [t.astype('f') for t in (x, y, z)]
+    scalars = np.sin(x*y*z)/(x*y*z)
+
+- code: |
+    spoints = tvtk.StructuredPoints(
+        origin=(-5.,-5,-5),
+        spacing=(10./127,10./127,10./127),
+        dimensions=(128,128,128)
+    )
+
+- code: |
+    # The copy makes the data contiguous and the transpose
+    # makes it suitable for display via tvtk.
+    s = scalars.transpose().copy()
+    spoints.point_data.scalars = s.ravel()
+    spoints.point_data.scalars.name = 'scalars'
+
+- markdown: |
+    ## Visualizing it
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    # Add the dataset to the pipeline
+    src = mlab.pipeline.add_dataset(spoints)
+
+    cut = mlab.pipeline.scalar_cut_plane(src)
+    contour = mlab.pipeline.iso_surface(src)
+
+- markdown: |
+    <center>
+    <img src="MEDIA/m2/datasets/structured_points3d.png" width="50%" height="50%"/>
+    </center>
+
+- markdown: |
+    ## Structured Grid
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    r, th, z = np.mgrid[1:10:25j, 0:2*np.pi:51j, 0:5:25j]
+    x, y = np.cos(th)*r, np.sin(th)*r
+    scalar = x*x + y*y + z*z
+
+- code: |
+    pts = np.empty(z.shape + (3,))
+    pts[...,0] = x
+    pts[...,1] = y
+    pts[...,2] = z
+
+- code: |
+    pts = pts.transpose(2, 1, 0, 3).copy()
+    pts.shape = pts.size//3, 3
+
+- code: |
+    sgrid = tvtk.StructuredGrid(dimensions=x.shape)
+    sgrid.points = pts
+    sgrid.point_data.scalars = np.ravel(scalar.T.copy())
+    sgrid.point_data.scalars.name = 'scalars'
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Visualizing it
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    # Add the dataset to the pipeline
+    src = mlab.pipeline.add_dataset(sgrid)
+
+    plane = mlab.pipeline.grid_plane(src)
+    plane.grid_plane.axis = 'z'
+    c_plane = mlab.pipeline.contour_grid_plane(src)
+    c_plane.enable_contours = False
+
+    iso = mlab.pipeline.iso_surface(src)
+
+- markdown: |
+    <center>
+    <img src="MEDIA/m2/datasets/structured_grid.png" width="50%" height="50%"/>
+    </center>
+
+- markdown: |
+    ## PolyData
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # The points in 3D.
+    points = np.array([[0.,0,0], [1,0,0], [0,1,0], [0,0,1]])
+    # Connectivity via indices to the points.
+    triangles = np.array([[0,1,3], [0,3,2], [1,2,3], [0,2,1]])
+    # Creating the data object.
+
+- code: |
+    mesh = tvtk.PolyData()
+    mesh.points = points # the points
+    mesh.polys = triangles # triangles for connectivity.
+    # For lines/verts: mesh.lines = lines; mesh.verts = verts
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    # Now create some point data.
+    temperature = np.array([10., 20. ,30., 40.], 'f')
+    mesh.point_data.scalars = temperature
+    mesh.point_data.scalars.name = 'temperature'
+
+- code: |
+    # Some vectors.
+    velocity = np.array([[0.,0.,0], [1.,0,0], [0.,1,0], [0.,0,1]])
+    mesh.point_data.vectors = velocity
+    mesh.point_data.vectors.name = 'velocity'
+
+- markdown: |
+    ## Visualizing it
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.add_dataset(mesh)
+
+    surf = mlab.pipeline.surface(src)
+    vec = mlab.pipeline.vectors(src)
+
+- markdown: |
+    <center>
+    <img src="MEDIA/m2/datasets/polydata.png" width="50%" height="50%"/>
+    </center>
+
+- markdown: |
+    ## Unstructured Grid
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    points = np.array([[0.,0.,0], [1.,0,0], [0.,1,0], [0.,0,1]])
+    tets = np.array([[0, 1, 2, 3]])
+    tet_type = tvtk.Tetra().cell_type # VTK_TETRA == 10
+
+- code: |
+    ug = tvtk.UnstructuredGrid(points=points)
+    # This sets up the cells.
+    ug.set_cells(tet_type, tets)
+
+- code: |
+    # Attribute data.
+    temperature = np.array([10, 20 ,20, 30], 'f')
+    ug.point_data.scalars = temperature
+    ug.point_data.scalars.name = 'temperature'
+    # Some vectors.
+    velocity = np.array([[0.,0,0], [1,0,0], [0,1,0], [0,0,1]])
+    ug.point_data.vectors = velocity
+    ug.point_data.vectors.name = 'velocity'
+
+- markdown: |
+    ## Visualizing it
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    # Add the dataset to the pipeline
+    src = mlab.pipeline.add_dataset(ug)
+
+    surf = mlab.pipeline.surface(src)
+    vec = mlab.pipeline.vectors(src)
+
+- markdown: |
+    <center>
+    <img src="MEDIA/m2/datasets/ug.png" width="50%" height="50%"/>
+    </center>
+
+- markdown: |
+    ## Saving data to file
+
+    * Use `tvtk.api.write_data`
+    * Automatically picks a writer
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from tvtk.api import write_data
+    write_data(ug, '/tmp/ug.vtu')
+    write_data(ug, '/tmp/ug.vtk')
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
