@@ -100,8 +100,9 @@ when creating Mayavi plots, install pyqt5 via pip like so:
 $ pip install pyqt5
 ```
 
-Note that pyqt5 version 5.11.2 on PyPI is broken, and you should install the
-previous version or perhaps a later version.  This can be done like so:
+Note that pyqt5 version 5.11.2 on PyPI seems broken for some versions of
+Python. If you are running into that and you should install the previous
+version or perhaps a later version. This can be done like so:
 
 ```
 $ pip install pyqt5==5.10.1
