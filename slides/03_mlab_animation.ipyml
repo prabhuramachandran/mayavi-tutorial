@@ -1,0 +1,308 @@
+cells:
+
+- markdown: |
+    # Using `mayavi.mlab`: Animation
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+
+    <br/>
+
+    **SciPy 2018**
+    **Austin, Texas, July 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - Getting started with `mlab`
+    - Using `mlab`
+       - The basics
+       - **Animation** $\Longleftarrow$
+    - Going deeper
+       - The pipeline
+       - Data sources
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %gui qt
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import numpy as np
+    from mayavi import mlab
+
+
+- markdown: |
+    ## Animation
+
+    * Specific to `mlab`
+    * `points3d, plot3d, surf, mesh`, `quiver3d, contour3d` etc.
+    * Returned object has `mlab_source` attribute
+    * Setting attributes updates the plot
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Animating data
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1)
+    for i in range(10):
+        s.mlab_source.scalars = x*0.1*(i+1)
+
+- markdown: |
+    ## But did it really animate??
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import time
+    mlab.clf()
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1)
+    for i in range(10):
+        s.mlab_source.scalars = x*0.1*(i+1)
+        time.sleep(0.1)
+
+- code: |
+    mlab.clf()
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1)
+    for i in range(10):
+        s.mlab_source.scalars = x*0.1*(i+1)
+        mlab.savefig('/tmp/anim_%02d.png' % i)
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1)
+    for i in range(10):
+        s.mlab_source.scalars = x*0.1*(i+1)
+        mlab.process_ui_events()
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Animation: `mlab_source.set`
+    Use `mlab_source.set` to change multiple values
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    for i in range(10):
+        s.mlab_source.set(
+            scalars=x*0.1*(i+1), y=y+i*0.5
+        )
+        mlab.process_ui_events()
+        time.sleep(0.1)
+
+
+- markdown: |
+    ## Animation: `mlab_source.reset`
+
+    Use reset if shape changes
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1, representation='wireframe')
+
+    fig = mlab.gcf()
+
+
+- code: |
+    for i in range(5):
+      sl = slice(0, 3, 1.0/(i+2))
+      x, y = np.mgrid[sl, sl]
+      sc = x*x*0.05*(i+1)
+      s.mlab_source.reset(x=x, y=y, scalars=sc)
+      fig.scene.reset_zoom()
+
+
+- markdown: |
+    ## `set` vs `reset`
+
+    * `mlab_source.set`: multiple attributes
+
+    * If you change the shape of the arrays use the
+      `reset` method
+
+    * See `mlab.test_*_anim`  functions for more examples!
+
+    * Use `mlab.savefig` : to dump files
+
+    * `savefig`  supports a variety of output
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Animate decorator
+
+    * `mlab.animate`
+    * Useful when interactivity is desired
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    @mlab.animate
+    def anim():
+        x, y = np.mgrid[0:3:1,0:3:1]
+        s = mlab.surf(x, y, x*0.1)
+        for i in range(25):
+            s.mlab_source.set(
+                scalars = x*0.1*(i+1))
+            yield
+
+
+- code: |
+    a = anim()
+
+
+- markdown: |
+    ## Notes
+
+    * Only works with a generator
+
+    * Note that the UI is fully interactive
+
+    * Can adjust the delay
+
+    Can also do,
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    @mlab.animate(delay=100, ui=False)
+    def anim():
+        x, y = np.mgrid[0:3:1,0:3:1]
+        s = mlab.surf(x, y, x*0.1)
+        for i in range(25):
+            s.mlab_source.set(
+                scalars = x*0.1*(i+1))
+            yield
+
+
+- markdown: |
+    ## Exercise
+
+    Create a stack of images animating the example below such that it looks
+    like the wave is moving.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x, y = np.mgrid[-3:3:100j,-3:3:100j]
+    z = np.sin(x*x + y*y)
+    s = mlab.surf(x, y, z)
+
+- markdown: |
+    ## Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Your solution here!
+
+- code: |
+    %load solutions/03_wave_anim.py
+
+
+- markdown: |
+    ## Automatic movie recording
+
+    * Click on "record" on the scene movie tab
+
+    * Or try the following
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    f = mlab.figure()
+    f.scene.movie_maker.record = True
+    mlab.test_mesh_sphere_anim()
+
+
+- markdown: |
+    ## What next?
+
+    - Going deeper!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
