@@ -1,0 +1,625 @@
+cells:
+
+- markdown: |
+    # Using `mayavi.mlab`: going deeper
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+
+    <br/>
+
+    **SciPy 2018**
+
+    **Austin, Texas, July 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - Getting started with `mlab`
+    - Using `mlab`
+       - The basics
+       - Animation
+    - **Going deeper**  $\Longleftarrow$
+       - The pipeline
+       - Data sources
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %gui qt
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import numpy as np
+    from mayavi import mlab
+
+
+- markdown: |
+    ## Recap
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def lorenz(x, y, z, s=10.,r=28.,
+               b=8./3.):
+        u = s*(y-x)
+        v = r*x -y - x*z
+        w = x*y - b*z
+        return u, v, w
+
+    x, y, z = np.mgrid[-50:50:20j,-50:50:20j,
+                       -10:60:20j]
+    u, v, w = lorenz(x, y, z)
+
+
+- code: |
+    mlab.quiver3d(
+        x, y, z, u, v, w,
+        scale_factor=0.01,
+        mask_points=5
+    )
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Viewing the pipeline
+
+    * On scene toolbar, click on Mayavi icon
+
+    * Or:
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.show_pipeline()
+
+- markdown: |
+    ## Looking inside
+
+    <center>
+    <img src="MEDIA/m2/mlab/mlab_pipeline1.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## The pipeline
+
+    <center>
+    <img src="MEDIA/m2/quiver_pipeline.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    <center>
+    <img src="MEDIA/m2/m2_big_picture.png" width="70%" height="70%"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Changing the pipeline
+
+    ### On UI
+
+    * Right click on node
+    * Mayavi app: also in app menus
+    * drag drop
+
+    ### Script
+
+    * Or use `mlab.pipeline`
+    * Example: `mlab.pipeline.outline()`
+    * We look at more useful methods later
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Another example pipeline
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    a = np.random.random((4, 4))
+    mlab.clf()
+    mlab.surf(a)
+    mlab.show_pipeline()
+
+- markdown: |
+    <center>
+    <img src="MEDIA/m2/mlab/simple_pipeline_demo.png" width="40%" height="30%" />
+    </center>
+
+- markdown: |
+    ## Using `mlab.pipeline`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.array2d_source(a)
+
+- code: |
+    warp = mlab.pipeline.warp_scalar(src)
+    normals = mlab.pipeline.poly_data_normals(warp)
+
+- code: |
+    surf = mlab.pipeline.surface(normals)
+
+
+- markdown: |
+    * Does exactly what `mlab.surf(a)` does!
+    * Lower-level but full control
+    * More options
+
+
+- markdown: |
+    ## Exercise
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    x, y, z = np.ogrid[-5:5:64j, -5:5:64j, -5:5:64j]
+    o = mlab.contour3d(x*x*0.5 + y*y + z*z*2)
+
+
+- markdown: |
+    * Modify contour parameters
+
+    * Hide the existing contours
+
+    * Add a scalar cut plane
+
+    * Do these with the UI
+
+    * Do them with scripting (also use `mlab.pipeline`)
+
+    * Remove the scalar cut plane
+
+
+- markdown: |
+    ## Some tips: try these
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x, y, z = np.ogrid[-5:5:64j, -5:5:64j, -5:5:64j]
+    o = mlab.contour3d(x*x*0.5 + y*y + z*z*2)
+
+
+- code: |
+    o.visible = False # or True
+    p = o.parent
+    print(p)
+
+
+- code: |
+    print(p.parent)
+    p.children
+
+
+- code: |
+    o.remove()
+    mlab.pipeline.grid_plane(p)
+
+
+- markdown: |
+    ## Recap
+
+    * `obj.visible`
+    * `obj.parent`
+    * `obj.children` : modules have none
+
+    * `obj.remove()`
+    * `mlab.pipeline`  lets us do more
+
+    * Right-click-menu equivalents are in `mlab.pipeline`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ### So how do you make a fancier script?
+
+    Use script recording
+
+    **Demo**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.test_flow()
+
+
+- markdown: |
+    Add a Vector Cut Plane
+
+
+- code: |
+    mlab.test_quiver3d()
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    Hide vectors, add a Vector Cut Plane
+
+
+- markdown: |
+    ## Surprised?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## So what is the problem?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Points?
+
+    <center>
+    <img src="MEDIA/m2/datasets/points.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Curve?
+
+    <center>
+    <img src="MEDIA/m2/datasets/wireframe.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Surface?
+
+    <center>
+    <img src="MEDIA/m2/datasets/surface.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Interior of sphere?
+
+    <center>
+    <img src="MEDIA/m2/datasets/surface.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    ## What is the intersection of a plane with each of these?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Going deeper
+
+    ### Data sources
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Datasets
+    Quiver v/s Flow
+
+    <table>
+    <tr>
+    <td><img src="MEDIA/m2/quiver_pipeline.png" width="100%"/></td>
+    <td><img src="MEDIA/m2/flow_pipeline.png" width="100%"/></td>
+    </tr>
+    </table>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Data sources and Datasets
+
+    * Intimately connected to VTK "datasets"
+
+    * Datasets
+
+       * Structure: Geometry and topology
+       * Attribute data associated with the structure
+
+
+    * Example: Temperature distribution in the room
+    * Example: Stress distribution on chair
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Datasets in mlab
+
+    * `mlab`  provides a few data sources
+
+    * Not the most general currently
+
+    * Three broad categories:
+
+       1. Unconnected sources
+       1. Implicitly connected sources
+       1. Explicitly connected sources
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Unconnected sources
+
+    | `scalar_scatter` | `vector_scatter` |
+    | ---------------- | ---------------- |
+    | <img src="MEDIA/m2/mlab/points3d_ex.png"/> | <img src="MEDIA/m2/mlab/quiver3d_ex.png"/> |
+    |`PolyData`      | `PolyData`    |
+    |`mlab.points3d`   | `mlab.quiver3d` |
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Implicitly-connected sources
+
+    | `scalar_field`    |   `vector_field`  |
+    | ----------------- | ---------------   |
+    | <img src="MEDIA/m2/mlab/contour3d.png" height="75%" width="100%"/> | <img src="MEDIA/m2/mlab/flow_ex.png" width="75%" height="60%" /> |
+    | `ImageData`       | `ImageData`     |
+    | `mlab.contour3d`  | `mlab.flow`     |
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Implicitly-connected sources
+
+    `array2d_source`
+
+    <img src="MEDIA/m2/mlab/imshow_ex.png" width="50%" height="50%"/>
+
+    `ImageData`
+
+    `mlab.imshow`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Explicitly-connected sources
+    | `line_source`  | `triangular_mesh_source` |
+    | -------------- | ---------------------- |
+    | <img src="MEDIA/m2/mlab/plot3d_ex.png"/> |  <img src="MEDIA/m2/mlab/triangular_mesh_ex.png"/> |
+    |`PolyData`      | `PolyData`    |
+    |`mlab.plot3d`   | `mlab.triangular_mesh` |
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Summary
+
+    * Unconnected: points in space
+
+    * Connected: represent surface or volume
+
+    * Attributes associated with structure are rendered
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise (Homework?)
+
+    * Run all the `mlab.test_*`  functions
+
+    * Read the source for each
+
+    * Inspect the pipeline for each example
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Recap
+
+    * `mlab`  gets you started
+    * Pipeline and data flow
+    * Datasets are important!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## `mlab`  and Mayavi?
+
+    * `mlab` : thin layer over the Mayavi OO API
+
+    * `mlab`  commands return mayavi objects
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise
+
+    * Visualize the following vector field
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from numpy import mgrid, sin, cos, pi
+    s = slice(0, 1, 20j)
+    x, y, z = mgrid[s,s,s]
+
+    u = sin(pi*x) * cos(pi*z)
+    v = -2*sin(pi*y) * cos(2*pi*z)
+    w = cos(pi*x)*sin(pi*z) + cos(pi*y)*sin(2*pi*z)
+
+- markdown: |
+    ## Hints / Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    src = mlab.pipeline.vector_field(
+        x, y, z, u, v, w
+    )
+    # ------------------------------------
+    mlab.pipeline.vectors(
+        src, mask_points=20, scale_factor=0.5
+    )
+    # ------------------------------------
+    mlab.pipeline.vector_cut_plane(
+        src, mask_points=2, scale_factor=0.5
+    )
+
+- markdown: |
+    ## Hints / Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mag = mlab.pipeline.extract_vector_norm(src)
+    mlab.pipeline.iso_surface(
+        mag, contours=[1.9, 0.5]
+    )
+    # ------------------------------------
+    flow = mlab.flow(
+        x, y, z, u, v, w, seed_scale=1,
+        seed_resolution=5,
+        integration_direction='both'
+    )
+
+- markdown: |
+    ## Exercise: play with your own data
+
+    Explore your own data with `mlab`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise (if you don't have your own data)
+
+    1. Start with flow for the Lorenz system
+    1. Now extract the vector norm (use a filter)
+    1. Plot iso-contours of this
+    1. Figure out how to do this from the UI and `mlab.pipeline`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
