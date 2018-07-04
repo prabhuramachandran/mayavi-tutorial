@@ -1,0 +1,301 @@
+cells:
+
+- markdown: |
+    # Other useful tools
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+    <br/>
+
+    **SciPy 2018**
+
+    **Austin, Texas, July 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - The `mayavi2` application
+        - Features
+        - Command line arguments
+        - `mlab` integration
+
+    - Jupyter notebooks
+
+    - Offscreen support
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Introduction to the application
+
+    * Visualization without scripting
+
+    * Especially useful with data files
+
+    * Can be scripted
+
+    * Supports `mlab`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    <img height="100%" src="MEDIA/m2/m2_app3_3.png"/>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Features
+
+    * Complete UI
+    * Powerful command line options
+    * Embedded Python
+    * Fully scriptable
+    * Reads different file formats
+    * Drag-drop onto shell
+    * Script recording
+    * Extensible
+    * Plug-in design using Envisage
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Command line arguments
+    ### Overview
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    !mayavi2 -h
+
+- markdown: |
+    * `-d datafile.ext` : Load data file
+
+    * `-f FilterName` : Load filter
+
+    * `-m ModuleName` : Load module
+
+    * `-s python-string` : Evaluate Python expression
+
+    * `-x file.py` : Execute Python code
+
+
+- markdown: |
+    ## Advanced options
+
+    * `-n` : new scene
+
+    * `-M` : new module manager
+
+    * `-o` : offscreen mode
+
+    * `-z filename` : load saved visualization
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Simple example
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %cd data
+
+- code: |
+    !mayavi2 -d room_vis.wrl -d fire_ug.vtu -m Outline  -m ScalarCutPlane
+
+
+- markdown: |
+    ## Scripting from the command line
+
+    * `-s python-code`  is very powerful
+
+    * Takes Python expressions
+
+    * Applies to the last module/filter
+
+    * Can be called multiple times
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## An example
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    !mayavi2 -d room_vis.wrl -d fire_ug.vtu \
+     -m Outline  -m ScalarCutPlane \
+    -s "enable_contours = True" \
+    -s "implicit_plane.widget.normal_to_z_axis=1"
+
+
+- markdown: |
+    ## `mlab` integration
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Using `mlab`
+
+    * Can import and use mlab
+
+    * Opening data: `mlab.pipeline.open`
+    * Add dataset: `mlab.pipeline.add_dataset`
+    * Use `lower_case_with_underscores`
+    * So `ScalarCutPlane`  $\rightarrow$ `mlab.pipeline.scalar_cut_plane`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - The `mayavi2` application
+        - Command line arguments
+        - UI features
+        - `mlab` integration
+
+    - **Jupyter notebooks** $\Longleftarrow$
+
+    - Offscreen support
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Inline IPython support
+    Optional installation:
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    $ jupyter nbextension install --py mayavi --user
+
+- markdown: |
+    Usage:
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from mayavi import mlab
+    mlab.init_notebook()
+
+- code: |
+    s = mlab.test_plot3d()
+    s
+
+- markdown: |
+    ## Known issues
+
+    - Works fine for small data
+    - Does not support slicing and widget interaction
+    - Transparency may not work
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - The `mayavi2` application
+        - Command line arguments
+        - UI features
+        - `mlab` integration
+
+    - Jupyter notebooks
+
+    - **Offscreen support** $\Longleftarrow$
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Offscreen rendering
+
+    * Depends on hardware, OS, build
+
+    * Works best on Windows!
+
+    * Basics are easy
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from mayavi import mlab
+    mlab.options.offscreen = True
+
+- code: |
+    mlab.test_plot3d()
+    mlab.savefig('/tmp/test.png')
+
+- markdown: |
+    ## What next?
+
+    - Learn more about the different sources, filters, and modules
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2

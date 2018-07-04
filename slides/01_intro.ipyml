@@ -114,16 +114,6 @@ cells:
       slide_type: slide
 
 - markdown: |
-
-    <div align="center">
-    <video loop controls width="90%" height="90%" src="./mayavi_recording_demo.webm" />
-    </div>
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
     ## Overview of architecture
     <center>
     <img width="80%" height="80%" src="MEDIA/m2/layers.png"/>
