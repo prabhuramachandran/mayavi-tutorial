@@ -682,12 +682,22 @@ cells:
     - Plenty of ways to visualize your data
     - Hopefully you have a good overview
     - Several examples
-    - Have fun!
 
   metadata:
     slideshow:
       slide_type: slide
 
+- markdown: |
+    ## What next?
+
+    - Check the documentation: http://docs.enthought.com/mayavi/mayavi/
+    - Look at more examples: https://github.com/enthought/mayavi/tree/master/examples/mayavi
+    - Learn [traits](http://docs.enthought.com/traits/)
+    - Learn [traitsui](http://docs.enthought.com/traitsui/) and make your own UIs
+
+  metadata:
+    slideshow:
+      slide_type: slide
 
 # The lines below here may be deleted if you do not need them.
 # ---------------------------------------------------------------------------

@@ -74,6 +74,21 @@ cells:
       slide_type: slide
 
 - markdown: |
+    ## History
+
+    - Mayavi-1.0 released in 2001
+    - Rewritten to use ETS in 2004-2005
+    - Gael Varoquaux: 2007 - 2012
+    - Contributions from Deepak Surti and other Enthought developers
+    - Many other contributors through PRs
+    - Support from Enthought over the years
+    - IIT Bombay supports with an academic environment
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
     ## Information
 
     - Old package: around for > 15 years
