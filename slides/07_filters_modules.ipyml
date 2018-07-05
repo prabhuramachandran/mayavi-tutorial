@@ -1,0 +1,717 @@
+cells:
+
+- markdown: |
+    # Sources, Filters, and Modules by example
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+    <br/>
+
+    **SciPy 2018**
+
+    **Austin, Texas, July 2018**
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Overview
+
+    - Mayavi has many features
+    - Many sources, filters, and modules
+    - Learn these with simple examples
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Overview
+
+    * Source: produce data
+
+    * Filter: filters the data producing more data
+
+    * Module: visualizes the data
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Getting started
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %gui qt
+
+- code: |
+    from mayavi import mlab
+    import numpy as np
+
+
+- markdown: |
+    ## Sources
+
+    * Open supported file: *.vtk, *.xml, *.vt,
+        *.pvt), VRML2 (*.wrl), 3D Studio (*.3ds), PLOT3D
+        (*.xyz), STL, BYU, RAW, PLY,  PDB,  SLC,  FACET,  OBJ,  AVSUCD
+        (*.inp),  GAMBIT (*.neu),  Exodus  (*.exii),  PNG,  JPEG,  BMP,
+        PNM, DCM, DEM, MHA, MHD, MINC, XIMG, TIFF,
+
+    * `ParametricSurface`
+    * `PointLoad`
+    * `BuiltinImage`
+    * `BuiltinSurface`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    s = mlab.pipeline.surface(
+        mlab.pipeline.parametric_surface()
+    )
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.builtin_surface()
+    s = mlab.pipeline.surface(src)
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.builtin_image()
+    img = mlab.pipeline.image_actor(src)
+
+
+- markdown: |
+    ## Simple Annotation Modules
+
+    * Axes
+
+    * Outline
+
+    * OrientationAxes
+
+    * Text, Text3D
+
+    * Labels
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    mlab.clf()
+    obj = mlab.test_plot3d()
+    mlab.axes() # Current object
+    mlab.axes(obj) # Specific object
+    mlab.outline()
+    mlab.text3d(-1, -1, -1, 'Hello!')
+    mlab.orientation_axes()
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Common Scalar Modules
+
+    * Surface
+
+    * IsoSurface
+
+    * Glyph
+
+    * ScalarCutPlane
+
+    Already seen plenty of examples of these!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Vector visualization Modules
+
+    * VectorCutplane
+
+    * Vectors
+
+    * WarpVectorCutPlane
+
+    * Streamline
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Demonstration
+
+    * Load the `fire_ug.vtu`  file
+
+    * Demo of some interesting modules
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/fire_ug.vtu')
+    vcp = mlab.pipeline.vector_cut_plane(src)
+    vcp.implicit_plane.widget.normal_to_z_axis = True
+    vcp.implicit_plane.widget.enabled = False
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    wcp = mlab.pipeline.warp_vector_cut_plane(src)
+    wcp.compute_normals = True
+
+
+- markdown: |
+    ## Data-specific modules
+
+    * GridPlane
+
+    * ContourGridPlane
+
+    * CustomGridPlane
+
+    * StructuredGridOutline
+
+    * SliceUnstructuredGrid
+
+    * ImagePlaneWidget
+
+    * ImageActor
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Demonstration
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/sgrid.vts')
+    so = mlab.pipeline.structured_grid_outline(src)
+
+- code: |
+    gp = mlab.pipeline.grid_plane(src)
+    gp.grid_plane.axis = 'y'
+    gp1 = mlab.pipeline.grid_plane(src)
+    gp1.grid_plane.axis = 'z'
+    cgp = mlab.pipeline.contour_grid_plane(src)
+    cgp.contour.number_of_contours = 10
+
+- markdown: |
+    ## Image plane widgets
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    sl = slice(-5, 5, 64j)
+    x, y, z = np.mgrid[sl,sl,sl]
+    scalar = np.sin(np.sqrt(x*x*0.5 + y*y + z*z*2))
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.scalar_field(x, y, z, scalar)
+
+- code: |
+    o = mlab.outline(src)
+    ip = mlab.pipeline.image_plane_widget(src)
+    ip.ipw.slice_index = 32
+    ip.ipw.plane_orientation = 'y_axes'
+
+- markdown: |
+    ## Slice Unstructured Grid
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/fire_ug.vtu')
+    sug = mlab.pipeline.slice_unstructured_grid(src)
+
+- markdown: |
+    ## Advanced modules
+
+    * TensorGlyph
+
+    * HyperStreamline
+
+    * Volume: for volume rendering
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.point_load()
+    o = mlab.outline()
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    tg = mlab.pipeline.tensor_glyph()
+    tg.glyph.mask_input_points = True
+    tg.glyph.mask_points.on_ratio = 10
+
+- markdown: |
+    ## Volume rending
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/heart.vti')
+    vol = mlab.pipeline.volume(src)
+
+
+- markdown: |
+    ## Filters
+
+    * Not always needed
+
+    * Branch the pipeline
+
+    * Very powerful
+
+    * Use modules to visualize filtered results
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * CellDerivatives: Computes derivatives from input point scalar and vector
+      data, produces cell data on the gradients. Used to calcuate the
+      vorticity approximately.
+
+    * CellToPointData: Transforms cell attribute data to point data by
+      averaging the cell data from the cells at the point.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Example
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/fire_ug.vtu')
+
+- code: |
+    cell_deriv = mlab.pipeline.cell_derivatives(src)
+    cell_deriv.filter.vector_mode = 'compute_vorticity'
+
+- code: |
+    cell2pnt = mlab.pipeline.cell_to_point_data(cell_deriv)
+    vcp = mlab.pipeline.vector_cut_plane(cell2pnt)
+
+
+- markdown: |
+    ## Filters
+
+    * Contour: generate iso-surfaces on any input dataset.
+    * CutPlane: slice through any dataset.  Provides a 3D widget interface
+      to position and move the slice interactively.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * DataSetClipper: Clips input data using a 3D widget.
+
+    * DecimatePro:  Reduces number of triangles in mesh.
+
+    * Delaunay2D: 2D Delaunay triangulation.
+
+    * Delaunay3D: 3D Delaunay triangulation.
+
+    * ElevationFilter:  Generate scalar data from the elevation in a given
+      direction.
+
+    * ExtractEdges: Turns edges into lines.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Demo of Delaunay filters
+
+    Consider a collection of points sampled from a volume (2D or 3D), how do
+    we find contours for this data?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Some random data.
+    x, y = np.random.random((2, 100))
+    s = x*x + y*y
+    z = np.ones_like(x)
+
+- markdown: |
+    ## Demo: solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    # Load up the data
+    src = mlab.pipeline.scalar_scatter(x, y, z, s)
+
+- code: |
+    ug = mlab.pipeline.delaunay2d(src)
+    surf = mlab.pipeline.surface(ug)
+    surf.actor.property.edge_visibility = True
+
+- markdown: |
+    ## In 3D
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Some random data.
+    x, y, z = np.random.random((3, 1000))
+    s = x*x + y*y + z*z
+
+- code: |
+    mlab.clf()
+    # Load up the data
+    src = mlab.pipeline.scalar_scatter(x, y, z, s)
+
+- code: |
+    ug = mlab.pipeline.delaunay3d(src)
+    surf = mlab.pipeline.iso_surface(ug)
+
+
+- markdown: |
+    ## Filters
+
+    * ExtractGrid: select a portion of, or subsample an input dataset with
+      implicit topology.
+
+    * ExtractTensorComponents: extract components from a tensor field.
+
+    * ExtractUnstructuredGrid: select a part of an unstructured grid.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/fire_ug.vtu')
+    eug = mlab.pipeline.extract_unstructured_grid(src)
+    eug.filter.trait_set(
+        cell_clipping=True, cell_minimum=100, cell_maximum=500
+    )
+    surf = mlab.pipeline.surface(eug)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Filters
+
+    * ExtractVectorComponents: select any of the three components of an
+      input vector data attribute.
+
+    * ExtractVectorNorm: Computes the norm (Eucliedean) of the input vector
+      data (with optional scaling between ).
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * GaussianSplatter: Splat input point data onto a grid.
+
+    * GreedyTerrainDecimation: triangulation of image data after simplifying
+      it.
+
+    * ImageChangeInformation: change the spacing and origin of an input
+      ImageData dataset.
+
+    * ImageDataProbe: probe any dataset using a Structured Points dataset.
+      Also allows to convert the scalar data to an unsigned short
+      to facilitate volume visualization.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x, y, z = np.random.random((3, 1000))
+    s = x*x + y*y + z*z
+
+    # Load up the data
+    mlab.clf()
+    src = mlab.pipeline.scalar_scatter(x, y, z, s)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    gs = mlab.pipeline.gaussian_splatter(src)
+    gs.filter.trait_set(radius=0.2, accumulation_mode='sum')
+    scp = mlab.pipeline.scalar_cut_plane(gs)
+
+
+- markdown: |
+    ## Image data probe
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/fire_ug.vtu')
+    ip = mlab.pipeline.image_data_probe(src)
+    vol = mlab.pipeline.volume(ip)
+
+
+- markdown: |
+    ## Filters
+
+    * MaskPoints: Selectively passes the input points downstream.  This can be
+      used to subsample the input points.  *Only passes through points.*
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    * PointToCellData: Convert point to cell data.
+
+    * PolyDataNormals: Computes normals from input data.  Gives meshes a
+      smoother appearance.
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Filters
+
+    * QuadricDecimation:  Simplifies triangles of a mesh.
+
+    * SelectOutput: Select one among several of the outputs of a given
+      input. Useful for a multi-block data source.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * SetActiveAttribute: set the active data attribute (scalars, vectors and
+      tensors) on a VTK dataset. Useful to compute contours of one scalar on
+      the contour of another scalar.
+
+    * Stripper: Create triangle strips and/or poly-lines. Useful for
+        regularizing broken up surfaces, such as those created by the Tube filter.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/fire_ug.vtu')
+    ctr = mlab.pipeline.contour(src)
+    ctr.filter.contours = [550]
+    surf = mlab.pipeline.surface(ctr)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Colors of `u` on contour of `t`
+
+    - Using `SetActiveAttribute`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.open('data/fire_ug.vtu')
+    ctr = mlab.pipeline.contour(src)
+    ctr.filter.contours = [550]
+
+- code: |
+    setaa = mlab.pipeline.set_active_attribute(ctr)
+    setaa.point_scalars_name = 'u'
+    surf = mlab.pipeline.surface(setaa)
+
+
+- markdown: |
+    ## Filters
+
+    * Threshold: Threshold input points on scalar value.
+
+    * TransformData: linear transformation to input data using a
+      tvtk.BoxWidget.  This does not work with
+      ImageData/StructuredPoints/RectilinearGrid.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * TriangleFilter: Converts input polygons and triangle strips to
+      triangles.  This is useful when you have a downstream filter that only
+      processes triangles.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    * Tube: Turns lines into tubes.
+
+    * UserDefined: This filter lets the user define their own filter
+      dynamically/interactively from VTK filters.
+
+    * Vorticity: This filter computes the vorticity of an input vector
+      field.
+
+- markdown: |
+    ## Filters
+
+    * WarpScalar: Warps the input data along a particular direction (either
+      the normals or a specified direction) with a scale specified by the local
+      scalar value.  Useful for making carpet plots.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    * WarpVector: Warps the input data along a the point vector attribute
+      scaled as per a scale factor.  Useful for showing flow profiles or
+      displacements.
+
+
+- code: |
+    mlab.clf()
+    room = mlab.pipeline.open('data/room_vis.wrl')
+    src = mlab.pipeline.open('data/fire_ug.vtu')
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    vort = mlab.pipeline.vorticity(src)
+    evn = mlab.pipeline.extract_vector_norm(vort)
+    iso = mlab.pipeline.iso_surface(evn)
+    vortex_lines = mlab.pipeline.streamline(evn)
+
+
+- markdown: |
+    ## Summary
+
+    - Plenty of ways to visualize your data
+    - Hopefully you have a good overview
+    - Several examples
+    - Have fun!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
