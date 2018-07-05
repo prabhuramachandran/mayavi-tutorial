@@ -236,6 +236,19 @@ cells:
     o.remove()
     mlab.pipeline.grid_plane(p)
 
+- markdown: |
+    ## A useful trick
+
+    - If you want to quickly configure parameters for a particular object
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    p.edit_traits()
+    # Will pop up a UI for `p` alone!
+
 
 - markdown: |
     ## Recap
@@ -246,6 +259,7 @@ cells:
 
     * `obj.remove()`
     * `mlab.pipeline`  lets us do more
+    * `obj.edit_traits()`: UI for `obj`
 
     * Right-click-menu equivalents are in `mlab.pipeline`
 

@@ -483,6 +483,19 @@ cells:
     mlab.clf()
     mlab.contour3d(x*x*0.5 + y*y + z*z*2)
 
+- markdown: |
+    ## 3D data: `volume_slice`
+
+    <img src="MEDIA/m2/mlab/volume_slice.png" width="35%" height="50%" />
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x, y, z = np.mgrid[-5:5:64j, -5:5:64j, -5:5:64j]
+    mlab.clf()
+    mlab.volume_slice(x, y, z, x*x*0.5 + y*y + z*z*2)
 
 
 - markdown: |
