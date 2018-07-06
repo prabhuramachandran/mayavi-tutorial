@@ -8,8 +8,8 @@ Feel free to clone the repository and update it before the tutorial begins.
 If you use slack, it might be good to join the mayavi channel on
 [scipy2018 slack](http://scipy2018.slack.com).
 
-Please make sure you have the latest Mayavi release installed (at least 4.6.0)
-before the tutorial.
+Please make sure you have the latest Mayavi release installed which is 4.6.1
+(or at least 4.6.0) before the tutorial.
 
 # Installation of Mayavi
 

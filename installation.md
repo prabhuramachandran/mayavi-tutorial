@@ -1,7 +1,7 @@
 # Installation instructions
 
 We recommend using Python 3.5 or 3.6. We recommend using the latest version of
-Mayavi namely, 4.6.0. Mayavi will also work with Python 2.7 if you are
+Mayavi namely, 4.6.1. Mayavi will also work with Python 2.7 if you are
 constrained to use that version. However, the following instructions are
 written for 3.5 or 3.6.
 
