@@ -107,3 +107,28 @@ version or perhaps a later version. This can be done like so:
 ```
 $ pip install pyqt5==5.10.1
 ```
+
+### On Python 2.7
+
+On Python 2.7, if you run
+
+```
+% gui qt
+```
+on a Jupyter notebook you might run into the following error:
+
+```
+    Could not load requested Qt binding. Please ensure that
+    PyQt4 >= 4.7, PyQt5, PySide >= 1.0.3 or PySide2 is available,
+    and only one is imported per session.
+
+    Currently-imported Qt library:                              None
+    PyQt4 available (requires QtCore, QtGui, QtSvg):            False
+    PyQt5 available (requires QtCore, QtGui, QtSvg, QtWidgets): False
+    PySide >= 1.0.3 installed:                                  True
+    PySide2 installed:                                          False
+    Tried to load:                                              ['pyqt5']
+```
+
+In this case, or if you have PyQt4 installed you can use this instead `%gui
+qt4`. Which should work correctly and use PyQt4.

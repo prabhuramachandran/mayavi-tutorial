@@ -96,6 +96,8 @@ cells:
 
     * Inline support will be covered later
 
+    * Python 2.x may require using: `%gui qt4`
+
     * May need to set env var
        * `export QT_API=pyqt`
        * `export QT_API=pyside`
@@ -118,6 +120,9 @@ cells:
 
 - markdown: |
     ## Please type along in a fresh Jupyter notebook
+
+    ** Many of the code blocks below may be empty because we want you to type along and not just execute the cells! **
+
 
   metadata:
     slideshow:
