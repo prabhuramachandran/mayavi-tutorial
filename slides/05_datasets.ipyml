@@ -458,6 +458,8 @@ cells:
 
 - code: |
     mlab.pipeline.open('data/room_vis.wrl')
+
+- code: |
     mlab.pipeline.open('data/fire_ug.vtu')
 
 - markdown: |
@@ -515,9 +517,8 @@ cells:
 - code: |
     from scipy import special
     # The scalar values.
-    x = (np.arange(50.0) - 25)/2.0
-    y = x.copy()
-    r = np.sqrt(x[:,None]**2+y**2)
+    x, y = np.mgrid[-10:10:51j, -10:10:51j]
+    r = np.sqrt(x**2 + y**2)
     z = 5.0*special.j0(r)  # Bessel function of order 0
 
   metadata:
@@ -528,9 +529,9 @@ cells:
     # Can't specify explicit points, they are implicit.
     # The volume specified using origin, spacing and dims.
     from tvtk.api import tvtk
-    spoints = tvtk.StructuredPoints(origin=(-12.5,-12.5,0),
-                                    spacing=(0.5,0.5,1),
-                                    dimensions=(50,50,1))
+    spoints = tvtk.StructuredPoints(origin=(-10, -10, 0),
+                                    spacing=(0.4, 0.4, 1),
+                                    dimensions=(51, 51, 1))
 
 - code: |
     # Transpose array data due to VTK's implicit ordering.
@@ -570,9 +571,8 @@ cells:
       slide_type: slide
 
 - code: |
-    x, y, z = np.ogrid[-5:5:128j,-5:5:128j,
+    x, y, z = np.mgrid[-5:5:128j,-5:5:128j,
                        -5:5:128j]
-    x, y, z = [t.astype('f') for t in (x, y, z)]
     scalars = np.sin(x*y*z)/(x*y*z)
 
 - code: |

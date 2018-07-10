@@ -2,14 +2,14 @@ cells:
 
 - markdown: |
     # Using `mayavi.mlab`: getting started
-
+    
     **Prabhu Ramachandran**
-
+    
     **Department of Aerospace Engineering, IIT Bombay**
     <br/>
-
+    
     **SciPy 2018**
-
+    
     **Austin, Texas, July 2018**
 
   metadata:
@@ -18,7 +18,7 @@ cells:
 
 - markdown: |
     ## Outline
-
+    
     - Getting started with `mlab`
     - Using `mlab`
        - The basics
@@ -40,11 +40,11 @@ cells:
 
 - markdown: |
     ## Overview
-
+    
     * Simple
-
+    
     * Convenient
-
+    
     * Full-featured
 
   metadata:
@@ -53,22 +53,22 @@ cells:
 
 - markdown: |
     ## Getting started
-
+    
     With `jupyter`,
-
+    
     ```
     $ jupyter console
     In [1]: %gui qt
     ```
-
+    
     with IPython,
-
+    
     ```
     $ ipython --gui=qt
     ```
-
+    
     or
-
+    
     ```
     $ ipython
     In [1]: %gui qt
@@ -80,7 +80,7 @@ cells:
 
 - markdown: |
     ## Using notebooks
-
+    
     Make sure you have the following code first
 
   metadata:
@@ -90,14 +90,15 @@ cells:
 - code: |
     %gui qt
 
+
 - markdown: |
-
+    
     * All plots will pop-up a window
-
+    
     * Inline support will be covered later
-
+    
     * Python 2.x may require using: `%gui qt4`
-
+    
     * May need to set env var
        * `export QT_API=pyqt`
        * `export QT_API=pyside`
@@ -105,13 +106,13 @@ cells:
 
 - markdown: |
     ## Troubleshooting
-
+    
     * Which version of Python?
-
+    
     * Version of VTK?
-
+    
     * Version of Qt?
-
+    
     * Post on slack channel
 
   metadata:
@@ -120,9 +121,8 @@ cells:
 
 - markdown: |
     ## Please type along in a fresh Jupyter notebook
-
+    
     ** Many of the code blocks below may be empty because we want you to type along and not just execute the cells! **
-
 
   metadata:
     slideshow:
@@ -138,13 +138,15 @@ cells:
 - code: |
     from mayavi import mlab
 
-- markdown: |
 
+- markdown: |
+    
     Try these
 
 
 - code: |
-    mlab.test_
+    mlab.test_<TAB>
+
 
 - code: |
     mlab.test_contour3d()
@@ -156,11 +158,12 @@ cells:
 - code: |
     mlab.test_contour3d??
 
+
 - markdown: |
     ## Exploring the view
-
+    
     <img src="MEDIA/m2/contour3d.png" height="60%" />
-
+    
     * Mouse
     * Keyboard
     * Toolbar
@@ -189,17 +192,20 @@ cells:
     import numpy as np
     from numpy import *
 
+
 - code: |
     t = linspace(0, 2*pi, 50)
     u = cos(t)*pi
     x, y, z = sin(u), cos(u), sin(t)
 
+
 - code: |
     mlab.points3d(x, y, z)
 
+
 - markdown: |
     ## Changing how things look
-
+    
     ### Clearing the view
 
   metadata:
@@ -209,6 +215,7 @@ cells:
 - code: |
     mlab.clf()
 
+
 - markdown: |
     ### IPython is your friend!
 
@@ -216,8 +223,9 @@ cells:
 - code: |
     mlab.points3d?
 
-- markdown: |
 
+- markdown: |
+    
     * Extra argument: Scalars
     * Keyword arguments
     * UI
@@ -235,7 +243,7 @@ cells:
 
 - markdown: |
     ### 1D data
-
+    
     <img src="MEDIA/m2/mlab/plot3d_ex.png" height="80%"/>
 
   metadata:
@@ -246,14 +254,15 @@ cells:
     mlab.clf()
     mlab.plot3d(x, y, z, t)
 
-- markdown: |
 
+- markdown: |
+    
     Plots lines between the points
 
 
 - markdown: |
     ## Exercise
-
+    
     Visualize a helical spring with a spherical mass on one of its ends with a
     fixed color for both.
 
@@ -282,17 +291,22 @@ cells:
 - code: |
     from numpy import mgrid
 
+
 - code: |
     arange(0, 3, 1)
+
 
 - code: |
     mgrid[0:3:1, 0:3:1]
 
+
 - code: |
     linspace(-1, 1, 5)
 
+
 - code: |
     mgrid[-1:1:5j]
+
 
 - markdown: |
     ## Example
@@ -305,8 +319,10 @@ cells:
     x, y = mgrid[-1:1:5j, -1:1:5j]
     z = x*x + y*y
 
+
 - code: |
     z
+
 
 - markdown: |
     ## 2D data: `mlab.surf`
@@ -320,8 +336,11 @@ cells:
     x, y = mgrid[-3:3:100j,-3:3:100j]
     z = sin(x*x + y*y)
 
+
 - code: |
+    mlab.clf()
     mlab.surf(x, y, z)
+
 
 - markdown: |
     Assumes the points are rectilinear
@@ -329,7 +348,7 @@ cells:
 
 - markdown: |
     ## 2D data: `mlab.contour_surf`
-
+    
     <img src="MEDIA/m2/mlab/contour_surf_ex.png" height="50%"/>
 
   metadata:
@@ -340,9 +359,11 @@ cells:
     x, y = mgrid[-3:3:100j,-3:3:100j]
     z = sin(x*x + y*y)
 
+
 - code: |
     mlab.clf()
     mlab.contour_surf(x, y, z)
+
 
 - markdown: |
     Assumes the points are rectilinear
@@ -361,7 +382,7 @@ cells:
 
 
 - markdown: |
-
+    
     Points need not be regular
 
 
@@ -370,7 +391,6 @@ cells:
     z = (x*x + y*y)*0.1
     mlab.clf()
     mlab.mesh(sin(x), cos(y), z)
-
 
   metadata:
     slideshow:
@@ -388,10 +408,9 @@ cells:
     mlab.mesh(sin(x), cos(y), sin(x*y))
 
 
-
 - markdown: |
     ## Exercise
-
+    
     Plot the surface of a unit sphere using `mlab.mesh`  with a
     wireframe.
 
@@ -409,9 +428,10 @@ cells:
 - code: |
     %load -r 5-10 solutions/02_sphere.py
 
+
 - markdown: |
     ## 2D data: `mlab.triangular_mesh`
-
+    
     <img src="MEDIA/m2/mlab/triangular_mesh_ex.png"/>
 
   metadata:
@@ -422,13 +442,16 @@ cells:
     x, y, z = [[0., 1., 1], [0., 0, 1], [0., 0, 0]]
     t = [[0, 1, 2]]
 
+
 - code: |
     points = np.array([[0., 0, 0], [1, 0, 0], [1, 1, 0]])
     x, y, z = points.T
 
+
 - code: |
     mlab.clf()
     mlab.triangular_mesh(x, y, z, t)
+
 
 - markdown: |
     Explicitly specify the triangles
@@ -436,7 +459,7 @@ cells:
 
 - markdown: |
     ## Exercise
-
+    
     Create a simple pyramid composed of triangles and plot it.
 
   metadata:
@@ -465,9 +488,11 @@ cells:
     s = np.random.random((2<<12, 2<<12))
     s.shape
 
+
 - code: |
     mlab.clf()
     mlab.imshow(s)
+
 
 - markdown: |
     Do not try this with `matplotlib`!
@@ -475,7 +500,7 @@ cells:
 
 - markdown: |
     ## 3D data
-
+    
     <img src="MEDIA/m2/mlab/contour3d.png" width="35%" height="50%" />
 
   metadata:
@@ -483,13 +508,14 @@ cells:
       slide_type: slide
 
 - code: |
-    x, y, z = ogrid[-5:5:64j, -5:5:64j, -5:5:64j]
+    x, y, z = mgrid[-5:5:64j, -5:5:64j, -5:5:64j]
     mlab.clf()
     mlab.contour3d(x*x*0.5 + y*y + z*z*2)
 
+
 - markdown: |
     ## 3D data: `volume_slice`
-
+    
     <img src="MEDIA/m2/mlab/volume_slice.png" width="35%" height="50%" />
 
   metadata:
@@ -504,7 +530,7 @@ cells:
 
 - markdown: |
     ## 3D vector data: `mlab.quiver3d`
-
+    
     <img src="MEDIA/m2/mlab/quiver3d_ex.png" width="35%" height="50%"/>
 
   metadata:
@@ -521,7 +547,6 @@ cells:
     o = mlab.quiver3d(1, 1, 1, 0, 5, 5)
 
 
-
 - markdown: |
     ## 3D vector data: `mlab.flow`
 
@@ -530,7 +555,7 @@ cells:
       slide_type: slide
 
 - code: |
-    x, y, z = mgrid[-2:3:10j, -2:3:10j, -2:3:10j]
+    x, y, z = mgrid[-2:3:100j, -2:3:100j, -2:3:100j]
     r = sqrt(x**2 + y**2 + z**4)
     u = y*sin(r)/(r+0.001)
     v = -x*sin(r)/(r+0.001)
@@ -540,16 +565,15 @@ cells:
                     seedtype='plane')
 
 
-
 - markdown: |
     ## Exercise: Lorenz equation
-
+    
     \begin{align}
     \frac{d x}{dt} &= s (y-x) \\
     \frac{d y}{d t} &= rx -y -xz \\
     \frac{d z}{d t} &= xy - bz \\
     \end{align}
-
+    
     Let $ s=10,r=28, b=8./3$.
 
   metadata:
@@ -562,7 +586,7 @@ cells:
 
 - markdown: |
     ## Exercise
-
+    
     Consider the region of interest
 
   metadata:
@@ -571,7 +595,6 @@ cells:
 
 - code: |
     x, y, z = mgrid[-50:50:20j, -50:50:20j, -10:60:20j]
-
 
 
 - markdown: |
@@ -593,13 +616,14 @@ cells:
         w = x*y - b*z
         return u, v, w
 
+
 - code: |
     %load solutions/02_lorenz.py
 
 
 - markdown: |
     ## Another exercise
-
+    
     * Try the same with `mlab.flow`
     * Use the UI to configure things
 
@@ -615,6 +639,7 @@ cells:
       slide_type: slide
 
 - code: |
+    mlab.clf()
     mlab.flow(x, y, z, u, v, w)
 
 
@@ -643,14 +668,14 @@ cells:
 
 - markdown: |
     ## Issues and solutions
-
+    
     * Basic visualization: not very useful
-
+    
     * Tweak parameters: `mask_points, scale_factor`
     * Explore parameters on UI
-
+    
     * `mlab.flow`  is a lot better!
-
+    
     **Good visualization involves work**
 
   metadata:
@@ -659,7 +684,7 @@ cells:
 
 - markdown: |
     ## Other utility functions
-
+    
     * `gcf` : get current figure
 
   metadata:
@@ -667,7 +692,7 @@ cells:
       slide_type: slide
 
 - markdown: |
-
+    
     * `savefig`, `figure`
 
   metadata:
@@ -675,7 +700,7 @@ cells:
       slide_type: fragment
 
 - markdown: |
-
+    
     * `axes`, `outline`
 
   metadata:
@@ -683,7 +708,7 @@ cells:
       slide_type: fragment
 
 - markdown: |
-
+    
     * `title`, `xlabel, ylabel, zlabel`
 
   metadata:
@@ -691,7 +716,7 @@ cells:
       slide_type: fragment
 
 - markdown: |
-
+    
     * `colorbar, scalarbar, vectorbar`
 
   metadata:
@@ -699,7 +724,7 @@ cells:
       slide_type: fragment
 
 - markdown: |
-
+    
     * `show` : Standalone mlab scripts
 
   metadata:
@@ -707,7 +732,7 @@ cells:
       slide_type: fragment
 
 - markdown: |
-
+    
     * `orientation_axes`, `text3d`
 
   metadata:
@@ -716,7 +741,7 @@ cells:
 
 - markdown: |
     ## More utility functions
-
+    
     * `show_pipeline`
     * `view, roll, yaw, move`
     * Others, see UG
@@ -739,7 +764,7 @@ cells:
 
 - markdown: |
     ## Exercise
-
+    
     Create a standalone Python script complete with axes, labels and a
     colorbar and save a png image of the rendered scene. Also show the window
     for a user to see the final plot and interact with it. Use any existing
@@ -786,3 +811,4 @@ metadata:
     transition: none
 nbformat: 4
 nbformat_minor: 2
+

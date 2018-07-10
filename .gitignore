@@ -1,6 +1,6 @@
 # use glob syntax.
 *.pyc
-*.doit.db
+*.doit.db*
 *~
 **/auto
 **/.ipynb_checkpoints
