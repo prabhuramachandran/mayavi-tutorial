@@ -11,6 +11,9 @@ If you use slack, it might be good to join the mayavi channel on
 Please make sure you have the latest Mayavi release installed which is 4.6.1
 (or at least 4.6.0) before the tutorial.
 
+:boom: See the [video recording](https://www.youtube.com/watch?v=r6OD07Qq2mw).
+
+
 # Installation of Mayavi
 
 You will need to have [Mayavi](https://github.com/enthought/mayavi) installed.
