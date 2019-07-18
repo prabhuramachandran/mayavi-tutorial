@@ -1,19 +1,16 @@
 # Installation instructions
 
-We recommend using Python 3.5 or 3.6. We recommend using the latest version of
-Mayavi namely, 4.6.1. Mayavi will also work with Python 2.7 if you are
-constrained to use that version. However, the following instructions are
-written for 3.5 or 3.6.
-
-Once you are done reading this and installing Mayavi, go back to the
-[main instructions](./README.md).
+We recommend using Python 3.x (ideally 3.6.x and above). We recommend using
+the latest version of Mayavi namely, 4.7.0. Mayavi will also work with Python
+2.7 if you are constrained to use that version. However, the following
+instructions are written for 3.x.
 
 ## Requirements
 
 [Mayavi](https://github.com/enthought/mayavi) requires numpy and
 [VTK](https://www.vtk.org) to be installed. It also requires a suitable GUI
-toolkit. We recommend that you install PyQt5 as that is what works best with
-Mayavi under Python 3.x.
+toolkit. We recommend that you install PyQt5 or PySide2 as that is what works
+best with Mayavi under Python 3.x.
 
 We provide specific instructions for different packaging environments below.
 
@@ -23,9 +20,6 @@ If you are not using any particular packaging environment you can easily
 install Mayavi using pip. This does require that you are able to compile
 extensions on your installation. This is usually the case on MacOS and Linux.
 
-On Windows you will need to install the required compilers. Information is
-available here: https://wiki.python.org/moin/WindowsCompilers and you likely
-need to have Microsoft Visual C++ 14.0 standalone installed.
 
 Given this you can install Mayavi with the following:
 ```
@@ -34,22 +28,37 @@ Given this you can install Mayavi with the following:
   $ pip install mayavi
 ```
 
-We also require jupyter and scipy for the workshop so please also install the following:
+If for some reason pyqt5 gives you problems, you can also try the following:
 
 ```
-  $ pip install scipy jupyter
+  $ pip install pyside2
 ```
 
-If this works successfully, please move on to the "testing your installation" below.
+We also require jupyter and scipy for the workshop so please also install the
+following:
+
+```
+  $ pip install scipy jupyter ipywidgets ipyevents
+```
+
+If this works successfully, please move on to the "testing your installation"
+below.
 
 ## Using conda
 
 To install Mayavi with conda try the following:
 
 ```
-$ conda install -c conda-forge numpy scipy apptools envisage jupyter
-$ pip install mayavi
+$ conda create -n mayavi
+$ conda activate mayavi  # or source activate mayavi
+$ conda install -c conda-forge numpy scipy traits jupyter ipywidgets ipyevents
+$ conda remove pyqt qt
+$ pip install mayavi pyqt5 jupyter
 ```
+
+We remove the pyqt from conda as it is an older version and doesn't work well
+with mayavi.
+
 
 On some architectures, you may be able to install the latest version of mayavi
 with conda itself. You could try that and if it installs the latest version of
@@ -59,13 +68,33 @@ instructions.
 If this works successfully, please move on to the "testing your installation"
 below.
 
+### Issues with conda
+
+- On conda-forge, the pyqt package is old (5.9.2) and will end up showing a
+  black screen when you use Mayavi.  The fix is to do the following::
+
+```
+conda remove pyqt qt
+pip install pyqt
+```
+
+You could also do away with pyqt and instead use pyside2 if you wish::
+
+```
+pip uninstall pyqt qt
+pip install pyside2
+```
+
+This will also work.  Test your installation to be sure.
+
+
 
 ## Using edm
 
 If you are using edm you can do the following:
 
 ```
-$ edm install numpy scipy apptools envisage jupyter
+$ edm install numpy scipy apptools envisage jupyter traits
 $ pip install mayavi pyqt5
 ```
 
@@ -88,8 +117,6 @@ In []: mlab.test_plot3d()
 This should produce a window that is interactive and usable without any
 tracebacks or exceptions.
 
-## Possible issues
-
 If you get strange warnings like this:
 ```
 QWidgetWindow(0x7fce6d8eac30, name="_ToolBarClassWindow") ( QScreen(0x7fce6be35730, name="Color LCD") ): Attempt to set a screen on a child window.
@@ -99,36 +126,4 @@ when creating Mayavi plots, install pyqt5 via pip like so:
 ```
 $ pip install pyqt5
 ```
-
-Note that pyqt5 version 5.11.2 on PyPI seems broken for some versions of
-Python. If you are running into that and you should install the previous
-version or perhaps a later version. This can be done like so:
-
-```
-$ pip install pyqt5==5.10.1
-```
-
-### On Python 2.7
-
-On Python 2.7, if you run
-
-```
-% gui qt
-```
-on a Jupyter notebook you might run into the following error:
-
-```
-    Could not load requested Qt binding. Please ensure that
-    PyQt4 >= 4.7, PyQt5, PySide >= 1.0.3 or PySide2 is available,
-    and only one is imported per session.
-
-    Currently-imported Qt library:                              None
-    PyQt4 available (requires QtCore, QtGui, QtSvg):            False
-    PyQt5 available (requires QtCore, QtGui, QtSvg, QtWidgets): False
-    PySide >= 1.0.3 installed:                                  True
-    PySide2 installed:                                          False
-    Tried to load:                                              ['pyqt5']
-```
-
-In this case, or if you have PyQt4 installed you can use this instead `%gui
-qt4`. Which should work correctly and use PyQt4.
+also see the issues for the different package managers above.
