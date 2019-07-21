@@ -8,9 +8,6 @@ cells:
     **Department of Aerospace Engineering, IIT Bombay**
     <br/>
 
-    **SciPy 2018**
-
-    **Austin, Texas, July 2018**
 
   metadata:
     slideshow:
@@ -192,11 +189,14 @@ cells:
 
 - markdown: |
     ## Inline IPython support
-    Optional installation:
+    Installation/setup:
 
   metadata:
     slideshow:
       slide_type: slide
+
+- code: |
+    $ pip install ipyevents
 
 - code: |
     $ jupyter nbextension install --py mayavi --user
@@ -217,11 +217,10 @@ cells:
     s
 
 - markdown: |
-    ## Known issues
+    ## See full demo
 
-    - Works fine for small data
-    - Does not support slicing and widget interaction
-    - Transparency may not work
+    - Works with notebooks and jupyterlab
+    - `notebooks/mayavi_jupyter.ipynb`
 
   metadata:
     slideshow:
