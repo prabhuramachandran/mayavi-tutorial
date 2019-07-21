@@ -114,15 +114,6 @@ cells:
       slide_type: slide
 
 - markdown: |
-    ## Please type along in a fresh Jupyter notebook
-
-    ** Many of the code blocks below may be empty because we want you to type along and not just execute the cells! **
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
     ## Using `mlab`
 
   metadata:
