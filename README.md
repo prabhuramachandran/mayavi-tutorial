@@ -1,17 +1,15 @@
-# Mayavi SciPy 2018 tutorial
+# Mayavi tutorial material
 
-This repository contains material for the Mayavi
-[SciPy 2018 tutorial](https://scipy2018.scipy.org/ehome/299527/711308/).
+This repository contains material for a Mayavi tutorial for around 4-5 hours.
 
-Feel free to clone the repository and update it before the tutorial begins.
+Please make sure you have the latest Mayavi release installed. Installation
+instructions are below.
 
-If you use slack, it might be good to join the mayavi channel on
-[scipy2018 slack](http://scipy2018.slack.com).
+# Videos
 
-Please make sure you have the latest Mayavi release installed which is 4.6.1
-(or at least 4.6.0) before the tutorial.
+Video recordings of tutorials run using this material are available here:
 
-:boom: See the [video recording](https://www.youtube.com/watch?v=r6OD07Qq2mw).
+- :boom: SciPy 2018 tutorial [video recording](https://www.youtube.com/watch?v=r6OD07Qq2mw).
 
 
 # Installation of Mayavi
@@ -24,5 +22,9 @@ Up-to-date information on Mayavi installation is also available on the
 [Mayavi github page](https://github.com/enthought/mayavi) or with the
 [Mayavi installation documentation](http://docs.enthought.com/mayavi/mayavi/installation.html).
 
-If you have issues with your installation, please do ask your questions on
-slack.
+
+# History
+
+This material was used in the past for the following tutorials:
+
+- [SciPy 2018 tutorial](https://scipy2018.scipy.org/ehome/299527/711308/).
