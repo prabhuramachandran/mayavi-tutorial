@@ -16,6 +16,25 @@ cells:
     slideshow:
       slide_type: slide
 
+
+- markdown: |
+    ## Material
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <center>
+    <a href="https://github.com/prabhuramachandran/mayavi-tutorial">
+    github.com/prabhuramachandran/mayavi-tutorial</a>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
 - markdown: |
     ## Outline
 
