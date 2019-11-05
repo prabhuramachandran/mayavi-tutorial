@@ -27,4 +27,4 @@ Up-to-date information on Mayavi installation is also available on the
 
 This material was used in the past for the following tutorials:
 
-- [SciPy 2018 tutorial](https://scipy2018.scipy.org/ehome/299527/711308/).
+- [SciPy 2018 tutorial](https://scipy2018.scipy.org/ehome/299527/711308/index.html).
